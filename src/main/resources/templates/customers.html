@@ -30,6 +30,9 @@
                 <th>City</th>
                 <th>State</th>
                 <th>Zip Code</th>
+                <th>View</th>
+                <th>Edit</th>
+                <th>Delete</th>
             </tr>
             <tr th:each="customer : ${customers}">
                 <td th:text="${customer.id}"></td>
@@ -47,7 +50,7 @@
                 <td><a th:href="${'/customer/delete/' + customer.id}">Delete</a></td>
             </tr>
         </table>
-        <a th:href="${'/customer/new'}">New Product</a>
+        <a th:href="${'/customer/new'}">New Customer</a>
     </div>
 </div>
 
