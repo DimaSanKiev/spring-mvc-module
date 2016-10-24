@@ -1,6 +1,6 @@
 package guru.springframework.domain;
 
-public class Customer {
+public class Customer implements DomainObject {
     private Integer id;
     private String firstName;
     private String lastName;
@@ -12,10 +12,12 @@ public class Customer {
     private String state;
     private String zipCode;
 
+    @Override
     public Integer getId() {
         return id;
     }
 
+    @Override
     public void setId(Integer id) {
         this.id = id;
     }
