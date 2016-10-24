@@ -48,4 +48,10 @@ public class CustomerController {
         model.addAttribute("customer", customerService.getCustomerById(id));
         return "customerForm";
     }
+
+    @RequestMapping(value = "/customer/delete/{id}")
+    public String deleteCustomer(@PathVariable Integer id) {
+        customerService.deleteCustomer(id);
+        return "redirect:/customers";
+    }
 }
