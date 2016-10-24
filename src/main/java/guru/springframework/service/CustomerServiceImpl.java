@@ -1,53 +1,37 @@
 package guru.springframework.service;
 
 import guru.springframework.domain.Customer;
+import guru.springframework.domain.DomainObject;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
 
 @Service
-public class CustomerServiceImpl implements CustomerService {
+public class CustomerServiceImpl extends AbstractMapService implements CustomerService {
 
-    private Map<Integer, Customer> customers;
-
-    public CustomerServiceImpl() {
-        loadCustomers();
+    @Override
+    public List<DomainObject> listAll() {
+        return super.listAll();
     }
 
     @Override
-    public List<Customer> listAllCustomers() {
-        return new ArrayList<>(customers.values());
+    public Customer getById(Integer id) {
+        return (Customer) super.getById(id);
     }
 
     @Override
-    public Customer getCustomerById(Integer id) {
-        return customers.get(id);
+    public Customer saveOrUpdate(Customer customer) {
+        return (Customer) super.saveOrUpdate(customer);
     }
 
     @Override
-    public Customer saveOrUpdateCustomer(Customer customer) {
-        if (customer != null) {
-            if (customer.getId() == null) {
-                customer.setId(getNextKey());
-            }
-            customers.put(customer.getId(), customer);
-            return customer;
-        } else {
-            throw new RuntimeException("Customer cannot be null");
-        }
+    public void delete(Integer id) {
+        super.delete(id);
     }
 
-    @Override
-    public void deleteCustomer(Integer id) {
-        customers.remove(id);
-    }
-
-    private Integer getNextKey() {
-        return Collections.max(customers.keySet()) + 1;
-    }
-
-    private void loadCustomers() {
-        customers = new HashMap<>();
+    protected void loadDomainObjects() {
+        domainMap = new HashMap<>();
 
         Customer customer1 = new Customer();
         customer1.setId(1);
@@ -60,7 +44,7 @@ public class CustomerServiceImpl implements CustomerService {
         customer1.setCity("Teterboro");
         customer1.setState("NJ");
         customer1.setZipCode("07608");
-        customers.put(1, customer1);
+        domainMap.put(1, customer1);
 
         Customer customer2 = new Customer();
         customer2.setId(2);
@@ -73,7 +57,7 @@ public class CustomerServiceImpl implements CustomerService {
         customer2.setCity("Birmingham");
         customer2.setState("AL");
         customer2.setZipCode("35203");
-        customers.put(2, customer2);
+        domainMap.put(2, customer2);
 
         Customer customer3 = new Customer();
         customer3.setId(3);
@@ -86,7 +70,7 @@ public class CustomerServiceImpl implements CustomerService {
         customer3.setCity("Dallas");
         customer3.setState("TX");
         customer3.setZipCode("75201");
-        customers.put(3, customer3);
+        domainMap.put(3, customer3);
 
         Customer customer4 = new Customer();
         customer4.setId(4);
@@ -99,7 +83,7 @@ public class CustomerServiceImpl implements CustomerService {
         customer4.setCity("Missoula");
         customer4.setState("MT");
         customer4.setZipCode("59802");
-        customers.put(4, customer4);
+        domainMap.put(4, customer4);
 
         Customer customer5 = new Customer();
         customer5.setId(5);
@@ -112,6 +96,6 @@ public class CustomerServiceImpl implements CustomerService {
         customer5.setCity("Harrisonburg");
         customer5.setState("VA");
         customer5.setZipCode("22801");
-        customers.put(5, customer5);
+        domainMap.put(5, customer5);
     }
 }
