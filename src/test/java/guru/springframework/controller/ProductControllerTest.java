@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -51,5 +52,16 @@ public class ProductControllerTest {
                 .andExpect(model().attribute("products", hasSize(2)));
     }
 
-    
+    @Test
+    public void testShow() throws Exception {
+        Integer id = 1;
+
+        // tell Mockito stub to return new product for ID 1
+        when(productService.getById(id)).thenReturn(new Product());
+
+        mockMvc.perform(get("/product/show/1"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("product/show"))
+                .andExpect(model().attribute("product", instanceOf(Product.class)));
+    }
 }
