@@ -64,7 +64,9 @@ public class CustomerControllerTest {
 
     @Test
     public void testEdit() throws Exception {
-        when(customerService.getById(1)).thenReturn(new Customer());
+        Integer id = 1;
+
+        when(customerService.getById(id)).thenReturn(new Customer());
 
         mockMvc.perform(get("/customer/edit/1"))
                 .andExpect(status().isOk())
@@ -89,8 +91,8 @@ public class CustomerControllerTest {
         String lastName = "Bird";
         String email = "NaomiPBird@teleworm.us";
         String phoneNumber = "713-232-0235";
-        String addressLineOne = "3865 Clousson Road";
-        String addressLineTwo= "";
+        String addressLineOne = "2 Clousson Road";
+        String addressLineTwo= "Apt 21";
         String city = "Rosenberg";
         String state = "TX";
         String zipCode = "77471";
