@@ -14,9 +14,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -125,5 +123,16 @@ public class ProductControllerTest {
         assertEquals(description, boundProduct.getValue().getDescription());
         assertEquals(price, boundProduct.getValue().getPrice());
         assertEquals(imageUrl, boundProduct.getValue().getImageUrl());
+    }
+
+    @Test
+    public void testDelete() throws Exception {
+        Integer id = 1;
+
+        mockMvc.perform(get("/product/delete/1"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/product/list"));
+
+        verify(productService, times(1)).delete(id);
     }
 }
