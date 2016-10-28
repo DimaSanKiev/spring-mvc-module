@@ -4,20 +4,21 @@ import guru.springframework.domain.Product;
 import guru.springframework.service.ProductService;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
@@ -86,5 +87,43 @@ public class ProductControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("product/productForm"))
                 .andExpect(model().attribute("product", instanceOf(Product.class)));
+    }
+
+    @Test
+    public void testSaveOrUpdate() throws Exception {
+        Integer id = 1;
+        String description = "Test Description";
+        BigDecimal price = new BigDecimal("12.00");
+        String imageUrl = "example.com";
+
+        Product returnProduct = new Product();
+        returnProduct.setId(id);
+        returnProduct.setDescription(description);
+        returnProduct.setPrice(price);
+        returnProduct.setImageUrl(imageUrl);
+
+        when(productService.saveOrUpdate(Matchers.any())).thenReturn(returnProduct);
+
+        mockMvc.perform(post("/product")
+            .param("id", "1")
+            .param("description", description)
+            .param("price", "12.00")
+            .param("imageUrl", "example.com"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:product/show/1"))
+                .andExpect(model().attribute("product", instanceOf(Product.class)))
+                .andExpect(model().attribute("product", hasProperty("id", is(id))))
+                .andExpect(model().attribute("product", hasProperty("description", is(description))))
+                .andExpect(model().attribute("product", hasProperty("price", is(price))))
+                .andExpect(model().attribute("product", hasProperty("imageUrl", is(imageUrl))));
+
+        // verify properties of bound object
+        ArgumentCaptor<Product> boundProduct = ArgumentCaptor.forClass(Product.class);
+        verify(productService).saveOrUpdate(boundProduct.capture());
+
+        assertEquals(id, boundProduct.getValue().getId());
+        assertEquals(description, boundProduct.getValue().getDescription());
+        assertEquals(price, boundProduct.getValue().getPrice());
+        assertEquals(imageUrl, boundProduct.getValue().getImageUrl());
     }
 }
