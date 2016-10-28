@@ -64,4 +64,15 @@ public class ProductControllerTest {
                 .andExpect(view().name("product/show"))
                 .andExpect(model().attribute("product", instanceOf(Product.class)));
     }
+
+    @Test
+    public void testEdit() throws Exception {
+        // tell Mockito stub to return new product for ID 1
+        when(productService.getById(1)).thenReturn(new Product());
+
+        mockMvc.perform(get("/product/edit/1"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("product/productForm"))
+                .andExpect(model().attribute("product", instanceOf(Product.class)));
+    }
 }
