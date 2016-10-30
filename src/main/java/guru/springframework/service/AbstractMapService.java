@@ -37,7 +37,11 @@ public abstract class AbstractMapService {
     }
 
     private Integer getNextKey() {
-        return Collections.max(domainMap.keySet()) + 1;
+        if (domainMap.isEmpty()) {
+            return 1;
+        } else {
+            return Collections.max(domainMap.keySet()) + 1;
+        }
     }
 
     protected abstract void loadDomainObjects();
