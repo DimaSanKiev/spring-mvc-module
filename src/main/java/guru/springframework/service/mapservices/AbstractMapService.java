@@ -1,4 +1,4 @@
-package guru.springframework.service;
+package guru.springframework.service.mapservices;
 
 import guru.springframework.domain.DomainObject;
 

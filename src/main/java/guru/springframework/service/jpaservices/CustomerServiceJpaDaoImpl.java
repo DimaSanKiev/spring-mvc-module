@@ -1,24 +1,16 @@
-package guru.springframework.service;
+package guru.springframework.service.jpaservices;
 
 import guru.springframework.domain.Customer;
+import guru.springframework.service.CustomerService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceUnit;
 import java.util.List;
 
 @Service
 @Profile("jpadao")
-public class CustomerServiceJpaDaoImpl implements CustomerService {
-
-    private EntityManagerFactory emf;
-
-    @PersistenceUnit
-    public void setEmf(EntityManagerFactory emf) {
-        this.emf = emf;
-    }
+public class CustomerServiceJpaDaoImpl extends AbstractJpaDaoService implements CustomerService {
 
     @Override
     public List<Customer> listAll() {
