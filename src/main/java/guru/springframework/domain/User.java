@@ -2,6 +2,7 @@ package guru.springframework.domain;
 
 import javax.persistence.*;
 
+@Entity
 public class User implements DomainObject {
 
     @Id
