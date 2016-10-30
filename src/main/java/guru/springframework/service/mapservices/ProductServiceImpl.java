@@ -32,8 +32,4 @@ public class ProductServiceImpl extends AbstractMapService implements ProductSer
         super.delete(id);
     }
 
-    @Override
-    protected void loadDomainObjects() {
-
-    }
 }
