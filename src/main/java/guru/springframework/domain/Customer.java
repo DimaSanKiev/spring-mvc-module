@@ -23,7 +23,7 @@ public class Customer implements DomainObject {
     @Embedded
     private Address shippingAddress;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private User user;
 
     @Override
