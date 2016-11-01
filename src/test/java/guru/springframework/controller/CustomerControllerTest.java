@@ -1,5 +1,6 @@
 package guru.springframework.controller;
 
+import guru.springframework.domain.Address;
 import guru.springframework.domain.Customer;
 import guru.springframework.service.CustomerService;
 import org.junit.Before;
@@ -103,11 +104,12 @@ public class CustomerControllerTest {
         returnCustomer.setLastName(lastName);
         returnCustomer.setEmail(email);
         returnCustomer.setPhoneNumber(phoneNumber);
-        returnCustomer.setAddressLineOne(addressLineOne);
-        returnCustomer.setAddressLineTwo(addressLineTwo);
-        returnCustomer.setCity(city);
-        returnCustomer.setState(state);
-        returnCustomer.setZipCode(zipCode);
+        returnCustomer.setBillingAddress(new Address());
+        returnCustomer.getBillingAddress().setAddressLineOne(addressLineOne);
+        returnCustomer.getBillingAddress().setAddressLineTwo(addressLineTwo);
+        returnCustomer.getBillingAddress().setCity(city);
+        returnCustomer.getBillingAddress().setState(state);
+        returnCustomer.getBillingAddress().setZipCode(zipCode);
 
         when(customerService.saveOrUpdate(Matchers.any())).thenReturn(returnCustomer);
 
@@ -136,19 +138,21 @@ public class CustomerControllerTest {
                 .andExpect(model().attribute("customer", hasProperty("state", is(state))))
                 .andExpect(model().attribute("customer", hasProperty("zipCode", is(zipCode))));
 
-        ArgumentCaptor<Customer> boundProduct = ArgumentCaptor.forClass(Customer.class);
-        verify(customerService).saveOrUpdate(boundProduct.capture());
+        ArgumentCaptor<Customer> customerCaptor = ArgumentCaptor.forClass(Customer.class);
+        verify(customerService).saveOrUpdate(customerCaptor.capture());
 
-        assertEquals(id, boundProduct.getValue().getId());
-        assertEquals(firstName, boundProduct.getValue().getFirstName());
-        assertEquals(lastName, boundProduct.getValue().getLastName());
-        assertEquals(email, boundProduct.getValue().getEmail());
-        assertEquals(phoneNumber, boundProduct.getValue().getPhoneNumber());
-        assertEquals(addressLineOne, boundProduct.getValue().getAddressLineOne());
-        assertEquals(addressLineTwo, boundProduct.getValue().getAddressLineTwo());
-        assertEquals(city, boundProduct.getValue().getCity());
-        assertEquals(state, boundProduct.getValue().getState());
-        assertEquals(zipCode, boundProduct.getValue().getZipCode());
+        Customer boundCustomer = customerCaptor.getValue();
+
+        assertEquals(id, boundCustomer.getId());
+        assertEquals(firstName, boundCustomer.getFirstName());
+        assertEquals(lastName, boundCustomer.getLastName());
+        assertEquals(email, boundCustomer.getEmail());
+        assertEquals(phoneNumber, boundCustomer.getPhoneNumber());
+        assertEquals(addressLineOne, boundCustomer.getBillingAddress().getAddressLineOne());
+        assertEquals(addressLineTwo, boundCustomer.getBillingAddress().getAddressLineTwo());
+        assertEquals(city, boundCustomer.getBillingAddress().getCity());
+        assertEquals(state, boundCustomer.getBillingAddress().getState());
+        assertEquals(zipCode, boundCustomer.getBillingAddress().getZipCode());
     }
 
     @Test
