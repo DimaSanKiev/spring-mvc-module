@@ -119,11 +119,11 @@ public class CustomerControllerTest {
             .param("lastName", lastName)
             .param("email", email)
             .param("phoneNumber", phoneNumber)
-            .param("addressLineOne", addressLineOne)
-            .param("addressLineTwo", addressLineTwo)
-            .param("city", city)
-            .param("state", state)
-            .param("zipCode", zipCode))
+            .param("shippingAddress.addressLineOne", addressLineOne)
+            .param("shippingAddress.addressLineTwo", addressLineTwo)
+            .param("shippingAddress.city", city)
+            .param("shippingAddress.state", state)
+            .param("shippingAddress.zipCode", zipCode))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:customer/show/1"))
                 .andExpect(model().attribute("customer", instanceOf(Customer.class)))
@@ -132,11 +132,11 @@ public class CustomerControllerTest {
                 .andExpect(model().attribute("customer", hasProperty("lastName", is(lastName))))
                 .andExpect(model().attribute("customer", hasProperty("email", is(email))))
                 .andExpect(model().attribute("customer", hasProperty("phoneNumber", is(phoneNumber))))
-                .andExpect(model().attribute("customer", hasProperty("addressLineOne", is(addressLineOne))))
-                .andExpect(model().attribute("customer", hasProperty("addressLineTwo", is(addressLineTwo))))
-                .andExpect(model().attribute("customer", hasProperty("city", is(city))))
-                .andExpect(model().attribute("customer", hasProperty("state", is(state))))
-                .andExpect(model().attribute("customer", hasProperty("zipCode", is(zipCode))));
+                .andExpect(model().attribute("customer", hasProperty("shippingAddress", hasProperty("addressLineOne", is(addressLineOne)))))
+                .andExpect(model().attribute("customer", hasProperty("shippingAddress", hasProperty("addressLineTwo", is(addressLineTwo)))))
+                .andExpect(model().attribute("customer", hasProperty("shippingAddress", hasProperty("city", is(city)))))
+                .andExpect(model().attribute("customer", hasProperty("shippingAddress", hasProperty("state", is(state)))))
+                .andExpect(model().attribute("customer", hasProperty("shippingAddress", hasProperty("zipCode", is(zipCode)))));
 
         ArgumentCaptor<Customer> customerCaptor = ArgumentCaptor.forClass(Customer.class);
         verify(customerService).saveOrUpdate(customerCaptor.capture());
@@ -148,11 +148,11 @@ public class CustomerControllerTest {
         assertEquals(lastName, boundCustomer.getLastName());
         assertEquals(email, boundCustomer.getEmail());
         assertEquals(phoneNumber, boundCustomer.getPhoneNumber());
-        assertEquals(addressLineOne, boundCustomer.getBillingAddress().getAddressLineOne());
-        assertEquals(addressLineTwo, boundCustomer.getBillingAddress().getAddressLineTwo());
-        assertEquals(city, boundCustomer.getBillingAddress().getCity());
-        assertEquals(state, boundCustomer.getBillingAddress().getState());
-        assertEquals(zipCode, boundCustomer.getBillingAddress().getZipCode());
+        assertEquals(addressLineOne, boundCustomer.getShippingAddress().getAddressLineOne());
+        assertEquals(addressLineTwo, boundCustomer.getShippingAddress().getAddressLineTwo());
+        assertEquals(city, boundCustomer.getShippingAddress().getCity());
+        assertEquals(state, boundCustomer.getShippingAddress().getState());
+        assertEquals(zipCode, boundCustomer.getShippingAddress().getZipCode());
     }
 
     @Test
