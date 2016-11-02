@@ -54,34 +54,35 @@
                         <p class="form-control-static" th:text="${user.customer.phoneNumber}">Phone Number</p>
                     </div>
                 </div>
+                <h2>Shipping Address</h2>
                 <div class="form-group">
                     <label class="col-sm-4 control-label">Address Line One:</label>
                     <div class="col-sm-8">
-                        <p class="form-control-static" th:text="${user.customer.billingAddress.addressLineOne}">Address Line One</p>
+                        <p class="form-control-static" th:text="${user.customer.shippingAddress.addressLineOne}">Address Line One</p>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-4 control-label">Address Line Two:</label>
                     <div class="col-sm-8">
-                        <p class="form-control-static" th:text="${user.customer.billingAddress.addressLineTwo}">Address Line Two</p>
+                        <p class="form-control-static" th:text="${user.customer.shippingAddress.addressLineTwo}">Address Line Two</p>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-4 control-label">City:</label>
                     <div class="col-sm-8">
-                        <p class="form-control-static" th:text="${user.customer.billingAddress.city}">City</p>
+                        <p class="form-control-static" th:text="${user.customer.shippingAddress.city}">City</p>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-4 control-label">State:</label>
                     <div class="col-sm-8">
-                        <p class="form-control-static" th:text="${user.customer.billingAddress.state}">State</p>
+                        <p class="form-control-static" th:text="${user.customer.shippingAddress.state}">State</p>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-4 control-label">Zip Code:</label>
                     <div class="col-sm-8">
-                        <p class="form-control-static" th:text="${user.customer.billingAddress.zipCode}">Zip Code</p>
+                        <p class="form-control-static" th:text="${user.customer.shippingAddress.zipCode}">Zip Code</p>
                     </div>
                 </div>
 

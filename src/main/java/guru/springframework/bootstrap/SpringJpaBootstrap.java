@@ -2,7 +2,6 @@ package guru.springframework.bootstrap;
 
 import guru.springframework.domain.*;
 import guru.springframework.domain.enums.OrderStatus;
-import guru.springframework.service.CustomerService;
 import guru.springframework.service.ProductService;
 import guru.springframework.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,12 +77,12 @@ public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedE
         customer1.setLastName("Shultz");
         customer1.setEmail("AlbertaGShultz@jourrapide.com");
         customer1.setPhoneNumber("732-619-7166");
-        customer1.setBillingAddress(new Address());
-        customer1.getBillingAddress().setAddressLineOne("3136 Webster Street");
-        customer1.getBillingAddress().setAddressLineTwo("");
-        customer1.getBillingAddress().setCity("Teterboro");
-        customer1.getBillingAddress().setState("NJ");
-        customer1.getBillingAddress().setZipCode("07608");
+        customer1.setShippingAddress(new Address());
+        customer1.getShippingAddress().setAddressLineOne("3136 Webster Street");
+        customer1.getShippingAddress().setAddressLineTwo("");
+        customer1.getShippingAddress().setCity("Teterboro");
+        customer1.getShippingAddress().setState("NJ");
+        customer1.getShippingAddress().setZipCode("07608");
         user1.setCustomer(customer1);
         userService.saveOrUpdate(user1);
 
@@ -95,12 +94,12 @@ public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedE
         customer2.setLastName("Cabezas");
         customer2.setEmail("TamiJCabezas@jourrapide.com");
         customer2.setPhoneNumber("205-271-9661");
-        customer2.setBillingAddress(new Address());
-        customer2.getBillingAddress().setAddressLineOne("2525 Retreat Avenue");
-        customer2.getBillingAddress().setAddressLineTwo("");
-        customer2.getBillingAddress().setCity("Birmingham");
-        customer2.getBillingAddress().setState("AL");
-        customer2.getBillingAddress().setZipCode("35203");
+        customer2.setShippingAddress(new Address());
+        customer2.getShippingAddress().setAddressLineOne("2525 Retreat Avenue");
+        customer2.getShippingAddress().setAddressLineTwo("");
+        customer2.getShippingAddress().setCity("Birmingham");
+        customer2.getShippingAddress().setState("AL");
+        customer2.getShippingAddress().setZipCode("35203");
         user2.setCustomer(customer2);
         userService.saveOrUpdate(user2);
 
@@ -112,12 +111,12 @@ public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedE
         customer3.setLastName("Philip");
         customer3.setEmail("WilliamGPhilip@dayrep.com");
         customer3.setPhoneNumber("214-225-1154");
-        customer3.setBillingAddress(new Address());
-        customer3.getBillingAddress().setAddressLineOne("482 Fancher Drive");
-        customer3.getBillingAddress().setAddressLineTwo("");
-        customer3.getBillingAddress().setCity("Dallas");
-        customer3.getBillingAddress().setState("TX");
-        customer3.getBillingAddress().setZipCode("75201");
+        customer3.setShippingAddress(new Address());
+        customer3.getShippingAddress().setAddressLineOne("482 Fancher Drive");
+        customer3.getShippingAddress().setAddressLineTwo("");
+        customer3.getShippingAddress().setCity("Dallas");
+        customer3.getShippingAddress().setState("TX");
+        customer3.getShippingAddress().setZipCode("75201");
         user3.setCustomer(customer3);
         userService.saveOrUpdate(user3);
 
@@ -129,12 +128,12 @@ public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedE
         customer4.setLastName("Heslin");
         customer4.setEmail("PaulCHeslin@armyspy.com");
         customer4.setPhoneNumber("406-721-8674");
-        customer4.setBillingAddress(new Address());
-        customer4.getBillingAddress().setAddressLineOne("2479 Tibbs Avenue");
-        customer4.getBillingAddress().setAddressLineTwo("");
-        customer4.getBillingAddress().setCity("Missoula");
-        customer4.getBillingAddress().setState("MT");
-        customer4.getBillingAddress().setZipCode("59802");
+        customer4.setShippingAddress(new Address());
+        customer4.getShippingAddress().setAddressLineOne("2479 Tibbs Avenue");
+        customer4.getShippingAddress().setAddressLineTwo("");
+        customer4.getShippingAddress().setCity("Missoula");
+        customer4.getShippingAddress().setState("MT");
+        customer4.getShippingAddress().setZipCode("59802");
         user4.setCustomer(customer4);
         userService.saveOrUpdate(user4);
 
@@ -146,12 +145,12 @@ public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedE
         customer5.setLastName("Scott");
         customer5.setEmail("DouglasLScott@jourrapide.com");
         customer5.setPhoneNumber("540-453-6394");
-        customer5.setBillingAddress(new Address());
-        customer5.getBillingAddress().setAddressLineOne("4471 Jehovah Drive");
-        customer5.getBillingAddress().setAddressLineTwo("");
-        customer5.getBillingAddress().setCity("Harrisonburg");
-        customer5.getBillingAddress().setState("VA");
-        customer5.getBillingAddress().setZipCode("22801");
+        customer5.setShippingAddress(new Address());
+        customer5.getShippingAddress().setAddressLineOne("4471 Jehovah Drive");
+        customer5.getShippingAddress().setAddressLineTwo("");
+        customer5.getShippingAddress().setCity("Harrisonburg");
+        customer5.getShippingAddress().setState("VA");
+        customer5.getShippingAddress().setZipCode("22801");
         user5.setCustomer(customer5);
         userService.saveOrUpdate(user5);
     }
