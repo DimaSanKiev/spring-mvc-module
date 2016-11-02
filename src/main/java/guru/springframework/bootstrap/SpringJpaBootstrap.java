@@ -2,7 +2,9 @@ package guru.springframework.bootstrap;
 
 import guru.springframework.domain.*;
 import guru.springframework.domain.enums.OrderStatus;
+import guru.springframework.domain.security.Role;
 import guru.springframework.service.ProductService;
+import guru.springframework.service.RoleService;
 import guru.springframework.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -17,6 +19,7 @@ public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedE
 
     private ProductService productService;
     private UserService userService;
+    private RoleService roleService;
 
     @Autowired
     public void setProductService(ProductService productService) {
@@ -28,12 +31,19 @@ public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedE
         this.userService = userService;
     }
 
+    @Autowired
+    public void setRoleService(RoleService roleService) {
+        this.roleService = roleService;
+    }
+
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         loadProducts();
         loadUsersAndCustomers();
         loadCarts();
         loadOrderHistory();
+        loadRoles();
+        assignUsersToDefaultRole();
     }
 
     private void loadProducts() {
@@ -184,6 +194,26 @@ public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedE
                 orderDetail.setQuantity(1);
                 order.addtoOrderDetails(orderDetail);
             });
+        });
+    }
+
+    private void loadRoles() {
+        Role role = new Role();
+        role.setRole("CUSTOMER");
+        roleService.saveOrUpdate(role);
+    }
+
+    private void assignUsersToDefaultRole() {
+        List<Role> roles = (List<Role>) roleService.listAll();
+        List<User> users = (List<User>) userService.listAll();
+
+        roles.forEach(role -> {
+            if (role.getRole().equalsIgnoreCase("CUSTOMER")) {
+                users.forEach(user -> {
+                    user.addRole(role);
+                    userService.saveOrUpdate(user);
+                });
+            }
         });
     }
 }
