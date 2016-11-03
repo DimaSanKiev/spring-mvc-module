@@ -24,7 +24,7 @@ public class User extends AbstractDomainClass {
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private Cart cart;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable
     private List<Role> roles = new ArrayList<>();
 
@@ -94,7 +94,7 @@ public class User extends AbstractDomainClass {
         }
     }
 
-    public void removerRole(Role role) {
+    public void removeRole(Role role) {
         this.roles.remove(role);
         role.getUsers().remove(this);
     }
