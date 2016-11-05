@@ -1,5 +1,7 @@
 package guru.springframework.service.reposervices;
 
+import guru.springframework.command.CustomerForm;
+import guru.springframework.converter.CustomerFormToCustomer;
 import guru.springframework.domain.Customer;
 import guru.springframework.repository.CustomerRepository;
 import guru.springframework.service.CustomerService;
@@ -15,10 +17,16 @@ import java.util.List;
 public class CustomerServiceRepoImpl implements CustomerService {
 
     private CustomerRepository customerRepository;
+    private CustomerFormToCustomer customerFormToCustomer;
 
     @Autowired
     public void setCustomerRepository(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
+    }
+
+    @Autowired
+    public void setCustomerFormToCustomer(CustomerFormToCustomer customerFormToCustomer) {
+        this.customerFormToCustomer = customerFormToCustomer;
     }
 
     @Override
@@ -36,6 +44,18 @@ public class CustomerServiceRepoImpl implements CustomerService {
     @Override
     public Customer saveOrUpdate(Customer domainObject) {
         return customerRepository.save(domainObject);
+    }
+
+    @Override
+    public Customer saveOrUpdateCustomerForm(CustomerForm customerForm) {
+        Customer newCustomer = customerFormToCustomer.convert(customerForm);
+
+        if (newCustomer.getUser().getId() != null) {
+            Customer existingCustomer = getById(newCustomer.getId());
+            newCustomer.getUser().setEnabled(existingCustomer.getUser().getEnabled());
+        }
+
+        return saveOrUpdate(newCustomer);
     }
 
     @Override
