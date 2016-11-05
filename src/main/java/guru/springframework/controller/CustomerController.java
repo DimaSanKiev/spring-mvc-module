@@ -1,10 +1,12 @@
 package guru.springframework.controller;
 
+import guru.springframework.command.CustomerForm;
 import guru.springframework.domain.Customer;
 import guru.springframework.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,19 +36,24 @@ public class CustomerController {
 
     @RequestMapping("/new")
     public String newCustomer(Model model) {
-        model.addAttribute("customer", new Customer());
+        model.addAttribute("customerForm", new CustomerForm());
         return "customer/customerForm";
     }
 
     @RequestMapping("/edit/{id}")
     public String editCustomer(@PathVariable Integer id, Model model) {
-        model.addAttribute("customer", customerService.getById(id));
+        model.addAttribute("customerForm", customerService.getById(id));
         return "customer/customerForm";
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String saveOrUpdateCustomer(Customer customer) {
-        Customer savedCustomer = customerService.saveOrUpdate(customer);
+    public String saveOrUpdateCustomer(CustomerForm customerForm, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return "customer/customerForm";
+        }
+
+        Customer savedCustomer = customerService.saveOrUpdateCustomerForm(customerForm);
         return "redirect:customer/show/" + savedCustomer.getId();
     }
 
