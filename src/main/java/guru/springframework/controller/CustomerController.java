@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.validation.Valid;
+
 @RequestMapping("/customer")
 @Controller
 public class CustomerController {
@@ -47,7 +49,7 @@ public class CustomerController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String saveOrUpdateCustomer(CustomerForm customerForm, BindingResult bindingResult) {
+    public String saveOrUpdateCustomer(@Valid CustomerForm customerForm, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             return "customer/customerForm";
