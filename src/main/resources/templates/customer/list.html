@@ -25,11 +25,6 @@
                 <th>Last Name</th>
                 <th>Email</th>
                 <th>Phone Number</th>
-                <th>Address Line 1</th>
-                <th>Address Line 2</th>
-                <th>City</th>
-                <th>State</th>
-                <th>Zip Code</th>
                 <th>View</th>
                 <th>Edit</th>
                 <th>Delete</th>
@@ -40,11 +35,6 @@
                 <td th:text="${customer.lastName}"></td>
                 <td th:text="${customer.email}"></td>
                 <td th:text="${customer.phoneNumber}"></td>
-                <td th:text="${customer.addressLineOne}"></td>
-                <td th:text="${customer.addressLineTwo}"></td>
-                <td th:text="${customer.city}"></td>
-                <td th:text="${customer.state}"></td>
-                <td th:text="${customer.zipCode}"></td>
                 <td><a th:href="${'/customer/show/' + customer.id}">View</a></td>
                 <td><a th:href="${'/customer/edit/' + customer.id}">Edit</a></td>
                 <td><a th:href="${'/customer/delete/' + customer.id}">Delete</a></td>

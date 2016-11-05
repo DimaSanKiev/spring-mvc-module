@@ -31,57 +31,57 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-4 control-label">Customer First Name:</label>
+                    <label class="col-sm-4 control-label">First Name:</label>
                     <div class="col-sm-8">
                         <p class="form-control-static" th:text="${customer.firstName}">First Name</p>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-4 control-label">Customer Last Name:</label>
+                    <label class="col-sm-4 control-label">Last Name:</label>
                     <div class="col-sm-8">
                         <p class="form-control-static" th:text="${customer.lastName}">Last Name</p>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-4 control-label">Customer Email:</label>
+                    <label class="col-sm-4 control-label">Email:</label>
                     <div class="col-sm-8">
                         <p class="form-control-static" th:text="${customer.email}">Email</p>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-4 control-label">Customer Phone Number:</label>
+                    <label class="col-sm-4 control-label">Phone Number:</label>
                     <div class="col-sm-8">
                         <p class="form-control-static" th:text="${customer.phoneNumber}">Phone Number</p>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-4 control-label">Customer Address Line One:</label>
+                    <label class="col-sm-4 control-label">Address Line One:</label>
                     <div class="col-sm-8">
-                        <p class="form-control-static" th:text="${customer.addressLineOne}">Address Line One</p>
+                        <p class="form-control-static" th:text="${customer?.shippingAddress?.addressLineOne}">Address Line One</p>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-4 control-label">Customer Address Line Two:</label>
                     <div class="col-sm-8">
-                        <p class="form-control-static" th:text="${customer.addressLineTwo}">Address Line Two</p>
+                        <p class="form-control-static" th:text="${customer?.shippingAddress?.addressLineTwo}">Address Line Two</p>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-4 control-label">Customer City:</label>
                     <div class="col-sm-8">
-                        <p class="form-control-static" th:text="${customer.city}">City</p>
+                        <p class="form-control-static" th:text="${customer?.shippingAddress?.city}">City</p>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-4 control-label">Customer State:</label>
                     <div class="col-sm-8">
-                        <p class="form-control-static" th:text="${customer.state}">State</p>
+                        <p class="form-control-static" th:text="${customer?.shippingAddress?.state}">State</p>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-4 control-label">Customer Zip Code:</label>
                     <div class="col-sm-8">
-                        <p class="form-control-static" th:text="${customer.zipCode}">Zip Code</p>
+                        <p class="form-control-static" th:text="${customer?.shippingAddress?.zipCode}">Zip Code</p>
                     </div>
                 </div>
 
