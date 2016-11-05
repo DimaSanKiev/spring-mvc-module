@@ -1,7 +1,11 @@
 package guru.springframework.service.jpaservices;
 
+import guru.springframework.command.CustomerForm;
+import guru.springframework.converter.CustomerFormToCustomer;
 import guru.springframework.domain.Customer;
 import guru.springframework.service.CustomerService;
+import guru.springframework.service.security.EncryptionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +15,19 @@ import java.util.List;
 @Service
 @Profile("jpadao")
 public class CustomerServiceJpaDaoImpl extends AbstractJpaDaoService implements CustomerService {
+
+    private EncryptionService encryptionService;
+    private CustomerFormToCustomer customerFormToCustomer;
+
+    @Autowired
+    public void setEncryptionService(EncryptionService encryptionService) {
+        this.encryptionService = encryptionService;
+    }
+
+    @Autowired
+    public void setCustomerFormToCustomer(CustomerFormToCustomer customerFormToCustomer) {
+        this.customerFormToCustomer = customerFormToCustomer;
+    }
 
     @Override
     public List<Customer> listAll() {
@@ -29,10 +46,27 @@ public class CustomerServiceJpaDaoImpl extends AbstractJpaDaoService implements 
         EntityManager em = emf.createEntityManager();
 
         em.getTransaction().begin();
+        if (domainObject.getUser() != null && domainObject.getUser().getPassword() != null) {
+            domainObject.getUser().setEncryptedPassword(
+                    encryptionService.encryptString(domainObject.getUser().getPassword())
+            );
+        }
         Customer savedCustomer = em.merge(domainObject);
         em.getTransaction().commit();
 
         return savedCustomer;
+    }
+
+    @Override
+    public Customer saveOrUpdateCustomerForm(CustomerForm customerForm) {
+        Customer newCustomer = customerFormToCustomer.convert(customerForm);
+
+        if (newCustomer.getUser().getId() != null) {
+            Customer existingCustomer = getById(newCustomer.getId());
+            newCustomer.getUser().setEnabled(existingCustomer.getUser().getEnabled());
+        }
+
+        return saveOrUpdate(newCustomer);
     }
 
     @Override
