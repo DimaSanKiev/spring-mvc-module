@@ -192,7 +192,7 @@ public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedE
                 OrderDetail orderDetail = new OrderDetail();
                 orderDetail.setProduct(product);
                 orderDetail.setQuantity(1);
-                order.addtoOrderDetails(orderDetail);
+                order.addToOrderDetails(orderDetail);
             });
         });
     }

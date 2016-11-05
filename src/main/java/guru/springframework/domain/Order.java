@@ -63,7 +63,7 @@ public class Order extends AbstractDomainClass {
         this.dateShipped = dateShipped;
     }
 
-    public void addtoOrderDetails(OrderDetail orderDetail) {
+    public void addToOrderDetails(OrderDetail orderDetail) {
         orderDetail.setOrder(this);
         orderDetails.add(orderDetail);
     }
