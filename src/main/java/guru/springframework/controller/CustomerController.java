@@ -1,12 +1,15 @@
 package guru.springframework.controller;
 
 import guru.springframework.command.CustomerForm;
+import guru.springframework.converter.CustomerToCustomerForm;
 import guru.springframework.domain.Customer;
 import guru.springframework.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,10 +21,23 @@ import javax.validation.Valid;
 public class CustomerController {
 
     private CustomerService customerService;
+    private Validator customerFormValidator;
+    private CustomerToCustomerForm customerToCustomerForm;
 
     @Autowired
     public void setCustomerService(CustomerService customerService) {
         this.customerService = customerService;
+    }
+
+    @Autowired
+    @Qualifier("customerFormValidator")
+    public void setCustomerFormValidator(Validator customerFormValidator) {
+        this.customerFormValidator = customerFormValidator;
+    }
+
+    @Autowired
+    public void setCustomerToCustomerForm(CustomerToCustomerForm customerToCustomerForm) {
+        this.customerToCustomerForm = customerToCustomerForm;
     }
 
     @RequestMapping({"/list", "/"})
@@ -44,12 +60,16 @@ public class CustomerController {
 
     @RequestMapping("/edit/{id}")
     public String editCustomer(@PathVariable Integer id, Model model) {
-        model.addAttribute("customerForm", customerService.getById(id));
+        Customer customer = customerService.getById(id);
+
+        model.addAttribute("customerForm", customerToCustomerForm.convert(customer));
         return "customer/customerForm";
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public String saveOrUpdateCustomer(@Valid CustomerForm customerForm, BindingResult bindingResult) {
+
+        customerFormValidator.validate(customerForm, bindingResult);
 
         if (bindingResult.hasErrors()) {
             return "customer/customerForm";
