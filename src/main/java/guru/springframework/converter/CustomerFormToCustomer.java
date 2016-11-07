@@ -13,6 +13,7 @@ public class CustomerFormToCustomer implements Converter<CustomerForm, Customer>
     @Override
     public Customer convert(CustomerForm customerForm) {
         Customer customer = new Customer();
+
         customer.setId(customerForm.getCustomerId());
         customer.setVersion(customerForm.getCustomerVersion());
         customer.setFirstName(customerForm.getFirstName());
@@ -26,6 +27,7 @@ public class CustomerFormToCustomer implements Converter<CustomerForm, Customer>
         customer.getUser().setVersion(customerForm.getUserVersion());
         customer.getUser().setUsername(customerForm.getUserName());
         customer.getUser().setPassword(customerForm.getPasswordText());
+
         return customer;
     }
 }
