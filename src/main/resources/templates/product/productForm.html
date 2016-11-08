@@ -57,7 +57,7 @@
                     <input type="text" class="form-control" th:field="*{imageUrl}" th:errorclass="has-error"/>
                     <span class="help-block">
                         <ul>
-                            <li th:each="err : ${#fields.errors()}" th:text="${err}"></li>
+                            <li th:each="err : ${#fields.errors('imageUrl')}" th:text="${err}"></li>
                         </ul>
                     </span>
                 </div>
