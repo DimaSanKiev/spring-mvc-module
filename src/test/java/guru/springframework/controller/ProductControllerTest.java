@@ -1,5 +1,7 @@
 package guru.springframework.controller;
 
+import guru.springframework.command.ProductForm;
+import guru.springframework.converter.ProductToProductForm;
 import guru.springframework.domain.Product;
 import guru.springframework.service.ProductService;
 import org.junit.Before;
@@ -34,6 +36,7 @@ public class ProductControllerTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this); // initializes controller and mocks
+        productController.setProductToProductForm(new ProductToProductForm());
         mockMvc = MockMvcBuilders.standaloneSetup(productController).build();
     }
 
@@ -67,13 +70,15 @@ public class ProductControllerTest {
 
     @Test
     public void testEdit() throws Exception {
+        Integer id = 1;
+
         // tell Mockito stub to return new product for ID 1
-        when(productService.getById(1)).thenReturn(new Product());
+        when(productService.getById(id)).thenReturn(new Product());
 
         mockMvc.perform(get("/product/edit/1"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("product/productForm"))
-                .andExpect(model().attribute("product", instanceOf(Product.class)));
+                .andExpect(model().attribute("productForm", instanceOf(ProductForm.class)));
     }
 
     @Test
@@ -84,7 +89,7 @@ public class ProductControllerTest {
         mockMvc.perform(get("/product/new"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("product/productForm"))
-                .andExpect(model().attribute("product", instanceOf(Product.class)));
+                .andExpect(model().attribute("productForm", instanceOf(ProductForm.class)));
     }
 
     @Test
@@ -116,8 +121,8 @@ public class ProductControllerTest {
                 .andExpect(model().attribute("product", hasProperty("imageUrl", is(imageUrl))));
 
         // verify properties of bound object
-        ArgumentCaptor<Product> boundProduct = ArgumentCaptor.forClass(Product.class);
-        verify(productService).saveOrUpdate(boundProduct.capture());
+        ArgumentCaptor<ProductForm> boundProduct = ArgumentCaptor.forClass(ProductForm.class);
+        verify(productService).saveOrUpdateProductForm(boundProduct.capture());
 
         assertEquals(id, boundProduct.getValue().getId());
         assertEquals(description, boundProduct.getValue().getDescription());
