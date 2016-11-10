@@ -44,6 +44,7 @@ public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedE
         loadOrderHistory();
         loadRoles();
         assignUsersToDefaultRole();
+        assignUsersToAdminRole();
     }
 
     private void loadProducts() {
@@ -80,7 +81,7 @@ public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedE
 
     private void loadUsersAndCustomers() {
         User user1 = new User();
-        user1.setUsername("user1");
+        user1.setUsername("user_admin");
         user1.setPassword("password");
         Customer customer1 = new Customer();
         customer1.setFirstName("Alberta");
@@ -97,7 +98,7 @@ public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedE
         userService.saveOrUpdate(user1);
 
         User user2 = new User();
-        user2.setUsername("user2");
+        user2.setUsername("user1");
         user2.setPassword("password");
         Customer customer2 = new Customer();
         customer2.setFirstName("Tami");
@@ -114,7 +115,7 @@ public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedE
         userService.saveOrUpdate(user2);
 
         User user3 = new User();
-        user3.setUsername("user3");
+        user3.setUsername("user2");
         user3.setPassword("password");
         Customer customer3 = new Customer();
         customer3.setFirstName("William");
@@ -131,7 +132,7 @@ public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedE
         userService.saveOrUpdate(user3);
 
         User user4 = new User();
-        user4.setUsername("user4");
+        user4.setUsername("user3");
         user4.setPassword("password");
         Customer customer4 = new Customer();
         customer4.setFirstName("Paul");
@@ -148,7 +149,7 @@ public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedE
         userService.saveOrUpdate(user4);
 
         User user5 = new User();
-        user5.setUsername("user5");
+        user5.setUsername("user4");
         user5.setPassword("password");
         Customer customer5 = new Customer();
         customer5.setFirstName("Douglas");
@@ -201,6 +202,10 @@ public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedE
         Role role = new Role();
         role.setRole("CUSTOMER");
         roleService.saveOrUpdate(role);
+
+        Role adminRole = new Role();
+        role.setRole("ADMIN");
+        roleService.saveOrUpdate(adminRole);
     }
 
     private void assignUsersToDefaultRole() {
@@ -210,6 +215,21 @@ public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedE
         roles.forEach(role -> {
             if (role.getRole().equalsIgnoreCase("CUSTOMER")) {
                 users.forEach(user -> {
+                    user.addRole(role);
+                    userService.saveOrUpdate(user);
+                });
+            }
+        });
+    }
+
+    private void assignUsersToAdminRole() {
+        List<Role> roles = (List<Role>) roleService.listAll();
+        List<User> users = (List<User>) userService.listAll();
+
+        roles.forEach(role -> {
+            if (role.getRole().equalsIgnoreCase("ADMIN")) {
+                users.forEach(user -> {
+                    if (user.getUsername().equals("user_admin"))
                     user.addRole(role);
                     userService.saveOrUpdate(user);
                 });
