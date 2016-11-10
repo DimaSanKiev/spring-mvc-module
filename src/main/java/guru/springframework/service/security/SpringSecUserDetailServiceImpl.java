@@ -2,6 +2,8 @@ package guru.springframework.service.security;
 
 import guru.springframework.domain.User;
 import guru.springframework.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,10 +16,13 @@ public class SpringSecUserDetailServiceImpl implements UserDetailsService {
     private UserService userService;
     private Converter<User, UserDetails> userUserDetailsConverter;
 
+    @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
 
+    @Autowired
+    @Qualifier("userToUserDetails")
     public void setUserUserDetailsConverter(Converter<User, UserDetails> userUserDetailsConverter) {
         this.userUserDetailsConverter = userUserDetailsConverter;
     }

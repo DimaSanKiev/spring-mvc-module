@@ -99,6 +99,7 @@ public class User extends AbstractDomainClass {
         if (!this.roles.contains(role)) {
             this.roles.add(role);
         }
+
         if (!role.getUsers().contains(this)) {
             role.getUsers().add(this);
         }

@@ -204,7 +204,7 @@ public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedE
         roleService.saveOrUpdate(role);
 
         Role adminRole = new Role();
-        role.setRole("ADMIN");
+        adminRole.setRole("ADMIN");
         roleService.saveOrUpdate(adminRole);
     }
 
@@ -229,9 +229,10 @@ public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedE
         roles.forEach(role -> {
             if (role.getRole().equalsIgnoreCase("ADMIN")) {
                 users.forEach(user -> {
-                    if (user.getUsername().equals("user_admin"))
-                    user.addRole(role);
-                    userService.saveOrUpdate(user);
+                    if (user.getUsername().equals("user_admin")) {
+                        user.addRole(role);
+                        userService.saveOrUpdate(user);
+                    }
                 });
             }
         });
