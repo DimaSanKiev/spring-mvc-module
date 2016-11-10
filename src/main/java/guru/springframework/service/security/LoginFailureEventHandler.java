@@ -5,11 +5,10 @@ import guru.springframework.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 @Component
-public class LoginSuccessEventHandler implements ApplicationListener<LoginSuccessEvent> {
+public class LoginFailureEventHandler implements ApplicationListener<LoginFailureEvent> {
 
     private UserService userService;
 
@@ -19,19 +18,24 @@ public class LoginSuccessEventHandler implements ApplicationListener<LoginSucces
     }
 
     @Override
-    public void onApplicationEvent(LoginSuccessEvent event) {
+    public void onApplicationEvent(LoginFailureEvent event) {
         Authentication authentication = (Authentication) event.getSource();
-        System.out.println("LoginEvent SUCCESS for: " + authentication.getPrincipal());
+        System.out.println("LoginEvent FAILURE for: " + authentication.getPrincipal());
         updateUserAccount(authentication);
     }
 
     private void updateUserAccount(Authentication authentication) {
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        User user = userService.findByUserName(userDetails.getUsername());
+        User user = userService.findByUserName((String) authentication.getPrincipal());
 
         if (user != null) {     // user found
-            user.setFailedLoginAttempts(0);
-            System.out.println("Good login, resetting failure attempts");
+            user.setFailedLoginAttempts(user.getFailedLoginAttempts() + 1);
+            System.out.println("Valid User name, updating failed attempts");
+
+            if (user.getFailedLoginAttempts() > 5) {
+                user.setEnabled(false);
+                System.out.println("LOCKING USER ACCOUNT!");
+            }
+
             userService.saveOrUpdate(user);
         }
     }
