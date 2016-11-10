@@ -28,6 +28,8 @@ public class User extends AbstractDomainClass {
     @JoinTable
     private List<Role> roles = new ArrayList<>();
 
+    private Integer failedLoginAttempts = 0;
+
     public String getUsername() {
         return username;
     }
@@ -83,6 +85,14 @@ public class User extends AbstractDomainClass {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public Integer getFailedLoginAttempts() {
+        return failedLoginAttempts;
+    }
+
+    public void setFailedLoginAttempts(Integer failedLoginAttempts) {
+        this.failedLoginAttempts = failedLoginAttempts;
     }
 
     public void addRole(Role role) {
