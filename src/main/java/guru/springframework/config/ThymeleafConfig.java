@@ -40,7 +40,7 @@ public class ThymeleafConfig {
     public ThymeleafViewResolver thymeleafViewResolver(SpringTemplateEngine templateEngine) {
         ThymeleafViewResolver resolver = new ThymeleafViewResolver();
         resolver.setTemplateEngine(templateEngine);
-        resolver.setCharacterEncoding("YTF-8");
+        resolver.setCharacterEncoding("UTF-8");
         resolver.setContentType("text/html");
         resolver.setOrder(Ordered.LOWEST_PRECEDENCE - 5);
         return resolver;
