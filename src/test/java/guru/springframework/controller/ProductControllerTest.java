@@ -97,7 +97,7 @@ public class ProductControllerTest {
         Integer id = 1;
         String description = "Test Description";
         BigDecimal price = new BigDecimal("12.00");
-        String imageUrl = "example.com";
+        String imageUrl = "http://www.example.com";
 
         Product returnProduct = new Product();
         returnProduct.setId(id);
@@ -105,20 +105,20 @@ public class ProductControllerTest {
         returnProduct.setPrice(price);
         returnProduct.setImageUrl(imageUrl);
 
-        when(productService.saveOrUpdate(Matchers.any())).thenReturn(returnProduct);
+        when(productService.saveOrUpdateProductForm(Matchers.any())).thenReturn(returnProduct);
 
         mockMvc.perform(post("/product")
             .param("id", "1")
             .param("description", description)
             .param("price", "12.00")
-            .param("imageUrl", "example.com"))
+            .param("imageUrl", "http://www.example.com"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:product/show/1"))
-                .andExpect(model().attribute("product", instanceOf(Product.class)))
-                .andExpect(model().attribute("product", hasProperty("id", is(id))))
-                .andExpect(model().attribute("product", hasProperty("description", is(description))))
-                .andExpect(model().attribute("product", hasProperty("price", is(price))))
-                .andExpect(model().attribute("product", hasProperty("imageUrl", is(imageUrl))));
+                .andExpect(model().attribute("productForm", instanceOf(ProductForm.class)))
+                .andExpect(model().attribute("productForm", hasProperty("id", is(id))))
+                .andExpect(model().attribute("productForm", hasProperty("description", is(description))))
+                .andExpect(model().attribute("productForm", hasProperty("price", is(price))))
+                .andExpect(model().attribute("productForm", hasProperty("imageUrl", is(imageUrl))));
 
         // verify properties of bound object
         ArgumentCaptor<ProductForm> boundProduct = ArgumentCaptor.forClass(ProductForm.class);
