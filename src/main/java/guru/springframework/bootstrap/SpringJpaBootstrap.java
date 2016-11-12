@@ -90,7 +90,6 @@ public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedE
         customer1.setPhoneNumber("732-619-7166");
         customer1.setShippingAddress(new Address());
         customer1.getShippingAddress().setAddressLineOne("3136 Webster Street");
-        customer1.getShippingAddress().setAddressLineTwo("");
         customer1.getShippingAddress().setCity("Teterboro");
         customer1.getShippingAddress().setState("NJ");
         customer1.getShippingAddress().setZipCode("07608");
@@ -98,7 +97,7 @@ public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedE
         userService.saveOrUpdate(user1);
 
         User user2 = new User();
-        user2.setUsername("user1");
+        user2.setUsername("user2");
         user2.setPassword("password");
         Customer customer2 = new Customer();
         customer2.setFirstName("Tami");
@@ -107,7 +106,6 @@ public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedE
         customer2.setPhoneNumber("205-271-9661");
         customer2.setShippingAddress(new Address());
         customer2.getShippingAddress().setAddressLineOne("2525 Retreat Avenue");
-        customer2.getShippingAddress().setAddressLineTwo("");
         customer2.getShippingAddress().setCity("Birmingham");
         customer2.getShippingAddress().setState("AL");
         customer2.getShippingAddress().setZipCode("35203");
@@ -115,7 +113,7 @@ public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedE
         userService.saveOrUpdate(user2);
 
         User user3 = new User();
-        user3.setUsername("user2");
+        user3.setUsername("user3");
         user3.setPassword("password");
         Customer customer3 = new Customer();
         customer3.setFirstName("William");
@@ -124,7 +122,6 @@ public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedE
         customer3.setPhoneNumber("214-225-1154");
         customer3.setShippingAddress(new Address());
         customer3.getShippingAddress().setAddressLineOne("482 Fancher Drive");
-        customer3.getShippingAddress().setAddressLineTwo("");
         customer3.getShippingAddress().setCity("Dallas");
         customer3.getShippingAddress().setState("TX");
         customer3.getShippingAddress().setZipCode("75201");
@@ -132,7 +129,7 @@ public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedE
         userService.saveOrUpdate(user3);
 
         User user4 = new User();
-        user4.setUsername("user3");
+        user4.setUsername("user4");
         user4.setPassword("password");
         Customer customer4 = new Customer();
         customer4.setFirstName("Paul");
@@ -141,7 +138,6 @@ public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedE
         customer4.setPhoneNumber("406-721-8674");
         customer4.setShippingAddress(new Address());
         customer4.getShippingAddress().setAddressLineOne("2479 Tibbs Avenue");
-        customer4.getShippingAddress().setAddressLineTwo("");
         customer4.getShippingAddress().setCity("Missoula");
         customer4.getShippingAddress().setState("MT");
         customer4.getShippingAddress().setZipCode("59802");
@@ -149,7 +145,7 @@ public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedE
         userService.saveOrUpdate(user4);
 
         User user5 = new User();
-        user5.setUsername("user4");
+        user5.setUsername("user5");
         user5.setPassword("password");
         Customer customer5 = new Customer();
         customer5.setFirstName("Douglas");
@@ -158,7 +154,6 @@ public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedE
         customer5.setPhoneNumber("540-453-6394");
         customer5.setShippingAddress(new Address());
         customer5.getShippingAddress().setAddressLineOne("4471 Jehovah Drive");
-        customer5.getShippingAddress().setAddressLineTwo("");
         customer5.getShippingAddress().setCity("Harrisonburg");
         customer5.getShippingAddress().setState("VA");
         customer5.getShippingAddress().setZipCode("22801");

@@ -5,7 +5,7 @@ import javax.persistence.PersistenceUnit;
 
 public class AbstractJpaDaoService {
 
-    protected EntityManagerFactory emf;
+    EntityManagerFactory emf;
 
     @PersistenceUnit
     public void setEmf(EntityManagerFactory emf) {
