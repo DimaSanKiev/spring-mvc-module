@@ -11,7 +11,7 @@ public class H2DataSourceConfig {
     public DataSource dataSource() {
         DataSource dataSource = new DataSource();
         dataSource.setDriverClassName("org.h2.Driver");
-        dataSource.setUrl("jdbc:mem:h2:testdb");
+        dataSource.setUrl("jdbc:h2:mem:testdb");
         dataSource.setUsername("sa");
         dataSource.setPassword("");
         return dataSource;
