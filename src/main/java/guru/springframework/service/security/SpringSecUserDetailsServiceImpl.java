@@ -10,8 +10,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-@Service("userDetailService")
-public class SpringSecUserDetailServiceImpl implements UserDetailsService {
+@Service("userDetailsService")
+public class SpringSecUserDetailsServiceImpl implements UserDetailsService {
 
     private UserService userService;
     private Converter<User, UserDetails> userUserDetailsConverter;
@@ -22,7 +22,7 @@ public class SpringSecUserDetailServiceImpl implements UserDetailsService {
     }
 
     @Autowired
-    @Qualifier("userToUserDetails")
+    @Qualifier(value = "userToUserDetails")
     public void setUserUserDetailsConverter(Converter<User, UserDetails> userUserDetailsConverter) {
         this.userUserDetailsConverter = userUserDetailsConverter;
     }

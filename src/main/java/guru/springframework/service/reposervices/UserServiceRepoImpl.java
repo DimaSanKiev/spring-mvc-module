@@ -1,11 +1,14 @@
 package guru.springframework.service.reposervices;
 
 import guru.springframework.domain.User;
+import guru.springframework.repository.CustomerRepository;
 import guru.springframework.repository.UserRepository;
 import guru.springframework.service.UserService;
+import guru.springframework.service.security.EncryptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +18,22 @@ import java.util.List;
 public class UserServiceRepoImpl implements UserService {
 
     private UserRepository userRepository;
+    private CustomerRepository customerRepository;
+    private EncryptionService encryptionService;
 
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+    @Autowired
+    public void setCustomerRepository(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
+    }
+
+    @Autowired
+    public void setEncryptionService(EncryptionService encryptionService) {
+        this.encryptionService = encryptionService;
     }
 
     @Override
@@ -35,12 +50,18 @@ public class UserServiceRepoImpl implements UserService {
 
     @Override
     public User saveOrUpdate(User domainObject) {
+        if (domainObject.getPassword() != null) {
+            domainObject.setEncryptedPassword(encryptionService.encryptString(domainObject.getPassword()));
+        }
         return userRepository.save(domainObject);
     }
 
     @Override
+    @Transactional
     public void delete(Integer id) {
-        userRepository.delete(id);
+        User user = userRepository.findOne(id);
+        customerRepository.delete(user.getCustomer());
+        userRepository.delete(user);
     }
 
     @Override

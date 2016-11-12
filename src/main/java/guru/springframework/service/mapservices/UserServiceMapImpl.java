@@ -3,16 +3,24 @@ package guru.springframework.service.mapservices;
 import guru.springframework.domain.DomainObject;
 import guru.springframework.domain.User;
 import guru.springframework.service.UserService;
+import guru.springframework.service.security.EncryptionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Predicate;
 
 @Service
 @Profile("map")
 public class UserServiceMapImpl extends AbstractMapService implements UserService {
+
+    private EncryptionService encryptionService;
+
+    @Autowired
+    public void setEncryptionService(EncryptionService encryptionService) {
+        this.encryptionService = encryptionService;
+    }
 
     @Override
     public List<DomainObject> listAll() {
@@ -26,6 +34,10 @@ public class UserServiceMapImpl extends AbstractMapService implements UserServic
 
     @Override
     public User saveOrUpdate(User domainObject) {
+        if (domainObject.getPassword() != null) {
+            domainObject.setEncryptedPassword(encryptionService.encryptString(domainObject.getPassword()));
+        }
+
         return (User) super.saveOrUpdate(domainObject);
     }
 

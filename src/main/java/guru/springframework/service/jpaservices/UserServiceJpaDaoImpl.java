@@ -12,7 +12,8 @@ import java.util.List;
 
 @Service
 @Profile("jpadao")
-public class UserServiceJpaDaoImpl extends AbstractJpaDaoService implements UserService {
+public class
+UserServiceJpaDaoImpl extends AbstractJpaDaoService implements UserService {
 
     private EncryptionService encryptionService;
 
