@@ -1,6 +1,7 @@
 package guru.springframework.controller;
 
 import guru.springframework.command.CustomerForm;
+import guru.springframework.command.validator.CustomerFormValidator;
 import guru.springframework.converter.CustomerToCustomerForm;
 import guru.springframework.domain.Customer;
 import guru.springframework.service.CustomerService;
@@ -31,7 +32,7 @@ public class CustomerController {
 
     @Autowired
     @Qualifier("customerFormValidator")
-    public void setCustomerFormValidator(Validator customerFormValidator) {
+    public void setCustomerFormValidator(CustomerFormValidator customerFormValidator) {
         this.customerFormValidator = customerFormValidator;
     }
 
